@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reinaldo Lugo Fotografía | Fotografía de Autor · Artes Escénicas</title>
+<meta name="description" content="Fotografía de autor y artes escénicas por Reinaldo Lugo. Realizador audiovisual y fotógrafo profesional radicado en Maracaibo, Venezuela.">
+<link rel="icon" href="assets/img/favicon.png">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="encabezado">
+  <a href="index.html" class="logo"><img src="assets/img/logo-horizontal.png" alt="Reinaldo Lugo Fotografía"></a>
+  <nav class="nav-principal">
+    <a href="index.html">Home</a>
+    <a href="portafolio.html">Portafolio</a>
+    <a href="sobre-mi.html">Sobre mí</a>
+    <a href="contacto.html">Contacto</a>
+  </nav>
+  <button class="boton-menu" aria-label="Abrir menú">&#9776;</button>
+</header>
+
+<section class="hero">
+  <img class="hero-imagen" src="assets/img/portada-01.jpg" alt="">
+  <div class="hero-contenido">
+    <span class="ojo">Fotografía de Autor · Artes Escénicas</span>
+    <h1>Reinaldo Lugo</h1>
+    <p>Realizador Audiovisual y Fotógrafo Profesional</p>
+  </div>
+  <span class="hero-scroll" aria-hidden="true"></span>
+</section>
+
+<section class="franja">
+  <div class="envoltorio">
+    <div class="franja-cabecera">
+      <h2>Trabajo Reciente</h2>
+      <a class="ver-todo" href="portafolio.html">Ver Portafolio Completo →</a>
+    </div>
+    <div class="galeria" data-galeria data-limite="9">
+      <p class="galeria-estado">Cargando fotografías…</p>
+    </div>
+  </div>
+</section>
+
+<footer class="pie">
+  <div class="envoltorio">© <span id="anio"></span> Reinaldo Lugo Fotografía</div>
+</footer>
+
+<script>document.getElementById("anio").textContent = new Date().getFullYear();</script>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portafolio | Reinaldo Lugo Fotografía</title>
+<meta name="description" content="Portafolio de fotografía de artes escénicas de Reinaldo Lugo.">
+<link rel="icon" href="assets/img/favicon.png">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="encabezado con-fondo">
+  <a href="index.html" class="logo"><img src="assets/img/logo-horizontal.png" alt="Reinaldo Lugo Fotografía"></a>
+  <nav class="nav-principal">
+    <a href="index.html">Home</a>
+    <a href="portafolio.html">Portafolio</a>
+    <a href="sobre-mi.html">Sobre mí</a>
+    <a href="contacto.html">Contacto</a>
+  </nav>
+  <button class="boton-menu" aria-label="Abrir menú">&#9776;</button>
+</header>
+
+<section class="titulo-pagina">
+  <div class="envoltorio"><h1>Portafolio</h1></div>
+</section>
+
+<section class="franja" style="padding-top:60px;">
+  <div class="envoltorio">
+    <div class="galeria" data-galeria>
+      <p class="galeria-estado">Cargando fotografías…</p>
+    </div>
+  </div>
+</section>
+
+<footer class="pie">
+  <div class="envoltorio">© <span id="anio"></span> Reinaldo Lugo Fotografía</div>
+</footer>
+
+<script>document.getElementById("anio").textContent = new Date().getFullYear();</script>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

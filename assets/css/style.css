@@ -1,0 +1,332 @@
+/* Reinaldo Lugo Fotografía — hoja de estilos principal */
+
+:root{
+  --negro: #0a0a0a;
+  --gris-panel: #161616;
+  --gris-linea: #2a2a2a;
+  --blanco: #f2f0ec;
+  --blanco-tenue: rgba(242,240,236,0.62);
+  --ambar: #d9a441;         /* acento inspirado en la luz de escenario */
+  --fuente-display: "Oswald", "Arial Narrow", sans-serif;
+  --fuente-cuerpo: "Work Sans", "Helvetica Neue", Arial, sans-serif;
+  --espaciado-max: 1180px;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+html{ scroll-behavior:smooth; }
+
+body{
+  background: var(--negro);
+  color: var(--blanco);
+  font-family: var(--fuente-cuerpo);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+
+a{ color:inherit; text-decoration:none; }
+
+img{ max-width:100%; display:block; }
+
+.envoltorio{
+  max-width: var(--espaciado-max);
+  margin:0 auto;
+  padding: 0 32px;
+}
+
+/* ---------- Encabezado ---------- */
+.encabezado{
+  position:fixed;
+  top:0; left:0; right:0;
+  z-index:100;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 18px 32px;
+  background: linear-gradient(to bottom, rgba(10,10,10,0.85), rgba(10,10,10,0));
+  transition: background .3s ease;
+}
+.encabezado.con-fondo{
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(6px);
+  border-bottom:1px solid var(--gris-linea);
+}
+.encabezado .logo img{ height:34px; width:auto; }
+
+.nav-principal{ display:flex; gap:34px; }
+.nav-principal a{
+  font-family: var(--fuente-display);
+  font-size:13px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color: var(--blanco-tenue);
+  padding-bottom:4px;
+  border-bottom:1px solid transparent;
+  transition: color .25s ease, border-color .25s ease;
+}
+.nav-principal a:hover,
+.nav-principal a.activo{
+  color: var(--blanco);
+  border-color: var(--ambar);
+}
+
+.boton-menu{
+  display:none;
+  background:none; border:none; color:var(--blanco);
+  font-size:26px; cursor:pointer;
+}
+
+@media (max-width: 760px){
+  .nav-principal{
+    position:fixed; inset:0 0 0 auto;
+    width:72%; max-width:320px;
+    background: var(--gris-panel);
+    flex-direction:column;
+    padding: 100px 36px;
+    gap:28px;
+    transform: translateX(100%);
+    transition: transform .3s ease;
+    border-left:1px solid var(--gris-linea);
+  }
+  .nav-principal.abierto{ transform:translateX(0); }
+  .boton-menu{ display:block; }
+}
+
+/* ---------- Hero (Home) ---------- */
+.hero{
+  position:relative;
+  height:100vh;
+  min-height:560px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  overflow:hidden;
+  background: var(--negro);
+}
+.hero-imagen{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover;
+  opacity:0;
+  transition: opacity 1.1s ease;
+}
+.hero-imagen.visible{ opacity:0.55; }
+.hero::after{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(10,10,10,.35) 0%, rgba(10,10,10,.15) 40%, rgba(10,10,10,.85) 100%);
+}
+.hero-contenido{ position:relative; z-index:2; padding: 0 24px; }
+.hero-contenido .ojo{
+  font-family:var(--fuente-display);
+  letter-spacing:4px;
+  text-transform:uppercase;
+  font-size:12px;
+  color: var(--ambar);
+  margin-bottom:18px;
+  display:inline-block;
+}
+.hero-contenido h1{
+  font-family: var(--fuente-display);
+  font-weight:600;
+  text-transform:uppercase;
+  font-size: clamp(42px, 8vw, 92px);
+  letter-spacing:2px;
+  line-height:1;
+}
+.hero-contenido p{
+  margin-top:18px;
+  font-size: clamp(14px, 2vw, 18px);
+  color: var(--blanco-tenue);
+  letter-spacing:.5px;
+}
+.hero-scroll{
+  position:absolute; bottom:34px; left:50%;
+  transform:translateX(-50%);
+  z-index:2;
+  width:26px; height:26px;
+  border-right:2px solid var(--blanco-tenue);
+  border-bottom:2px solid var(--blanco-tenue);
+  transform: translateX(-50%) rotate(45deg);
+  animation: rebote 2.2s ease-in-out infinite;
+}
+@keyframes rebote{
+  0%,100%{ margin-top:0; opacity:.5; }
+  50%{ margin-top:10px; opacity:1; }
+}
+
+/* ---------- Franja destacada (Home) ---------- */
+.franja{
+  padding: 110px 0;
+  border-top:1px solid var(--gris-linea);
+}
+.franja-cabecera{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:24px;
+  margin-bottom:44px;
+  flex-wrap:wrap;
+}
+.franja-cabecera h2{
+  font-family:var(--fuente-display);
+  text-transform:uppercase;
+  font-size: clamp(26px,4vw,38px);
+  letter-spacing:1px;
+}
+.franja-cabecera .ver-todo{
+  font-family:var(--fuente-display);
+  font-size:13px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--ambar);
+  border-bottom:1px solid var(--ambar);
+  padding-bottom:3px;
+  white-space:nowrap;
+}
+
+/* ---------- Galería ---------- */
+.galeria{
+  columns: 3 260px;
+  column-gap:14px;
+}
+.galeria figure{
+  break-inside:avoid;
+  margin-bottom:14px;
+  overflow:hidden;
+  position:relative;
+  background:var(--gris-panel);
+}
+.galeria img{
+  width:100%;
+  display:block;
+  transition: transform .5s ease, filter .5s ease;
+  filter: grayscale(15%);
+}
+.galeria a:hover img{
+  transform: scale(1.045);
+  filter:grayscale(0%);
+}
+@media (max-width:600px){ .galeria{ columns: 2 160px; } }
+
+.galeria-estado{
+  padding:60px 0;
+  text-align:center;
+  color: var(--blanco-tenue);
+  font-family: var(--fuente-display);
+  letter-spacing:1px;
+  text-transform:uppercase;
+  font-size:13px;
+}
+
+/* ---------- Título de página interior ---------- */
+.titulo-pagina{
+  padding: 150px 0 50px;
+  text-align:center;
+  border-bottom:1px solid var(--gris-linea);
+}
+.titulo-pagina h1{
+  font-family:var(--fuente-display);
+  text-transform:uppercase;
+  letter-spacing:2px;
+  font-size: clamp(28px,5vw,44px);
+}
+
+/* ---------- Sobre mí ---------- */
+.sobre-mi{
+  padding: 90px 0 130px;
+  display:grid;
+  grid-template-columns: 380px 1fr;
+  gap:64px;
+  align-items:start;
+}
+.sobre-mi .retrato{ position:relative; }
+.sobre-mi .retrato img{ filter:grayscale(10%); }
+.sobre-mi .retrato::before{
+  content:"";
+  position:absolute; top:16px; left:16px; right:-16px; bottom:-16px;
+  border:1px solid var(--ambar);
+  z-index:-1;
+}
+.sobre-mi .texto h2{
+  font-family:var(--fuente-display);
+  text-transform:uppercase;
+  font-size: clamp(26px,4vw,36px);
+  margin-bottom:4px;
+}
+.sobre-mi .texto .rol{
+  color: var(--ambar);
+  font-family:var(--fuente-display);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  font-size:13px;
+  display:block;
+  margin-bottom:26px;
+}
+.sobre-mi .texto p{
+  color: var(--blanco-tenue);
+  margin-bottom:18px;
+  max-width:62ch;
+}
+@media (max-width:780px){
+  .sobre-mi{ grid-template-columns:1fr; gap:36px; }
+  .sobre-mi .retrato{ max-width:320px; margin:0 auto; }
+}
+
+/* ---------- Contacto ---------- */
+.contacto{
+  padding: 90px 0 140px;
+  text-align:center;
+}
+.contacto .intro{
+  max-width:560px;
+  margin:0 auto 50px;
+  color: var(--blanco-tenue);
+}
+.contacto-iconos{
+  display:flex;
+  justify-content:center;
+  gap:26px;
+  margin-bottom:40px;
+  flex-wrap:wrap;
+}
+.contacto-iconos a{
+  width:64px; height:64px;
+  border-radius:50%;
+  border:1px solid var(--gris-linea);
+  display:flex; align-items:center; justify-content:center;
+  transition: border-color .25s ease, transform .25s ease, background .25s ease;
+}
+.contacto-iconos a:hover{
+  border-color:var(--ambar);
+  background: rgba(217,164,65,0.08);
+  transform: translateY(-3px);
+}
+.contacto-iconos svg{ width:24px; height:24px; fill:var(--blanco); }
+.contacto-datos p{
+  font-family:var(--fuente-display);
+  letter-spacing:1px;
+  font-size: clamp(18px,3vw,24px);
+  margin-bottom:6px;
+}
+.contacto-datos a:hover{ color:var(--ambar); }
+
+/* ---------- Pie ---------- */
+.pie{
+  border-top:1px solid var(--gris-linea);
+  padding: 30px 0;
+  text-align:center;
+  color: var(--blanco-tenue);
+  font-size:13px;
+  letter-spacing:.5px;
+}
+
+/* ---------- Accesibilidad ---------- */
+a:focus-visible, button:focus-visible{
+  outline:2px solid var(--ambar);
+  outline-offset:3px;
+}
+@media (prefers-reduced-motion: reduce){
+  *{ animation:none !important; transition:none !important; }
+}
