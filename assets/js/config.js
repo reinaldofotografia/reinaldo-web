@@ -7,6 +7,6 @@ const SITIO_CONFIG = {
   githubUsuario: "reinaldofotografia",
   githubRepo: "reinaldo-web",
   githubRama: "main",
-  carpetaPortafolio: "Portafolio",
-  carpetaPortada: "Portada"
+  carpetaPortafolio: "portafolio",
+  carpetaPortada: "portadas"
 };
