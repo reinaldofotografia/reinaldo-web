@@ -203,12 +203,75 @@ img{ max-width:100%; display:block; }
   display:block;
   transition: transform .5s ease, filter .5s ease;
   filter: grayscale(15%);
+  pointer-events:none; /* evita el menú de "guardar imagen" del navegador sobre la imagen */
+  -webkit-user-select:none; user-select:none;
+  -webkit-touch-callout:none; /* evita el menú de guardar al mantener presionado en iPhone */
 }
-.galeria a:hover img{
+.galeria-boton{
+  display:block;
+  width:100%;
+  border:none; padding:0; margin:0;
+  background:none;
+  cursor:pointer;
+}
+.galeria-boton:hover img{
   transform: scale(1.045);
   filter:grayscale(0%);
 }
 @media (max-width:600px){ .galeria{ columns: 2 160px; } }
+
+/* ---------- Visor de fotos (lightbox) ---------- */
+.visor-fotos{
+  position:fixed; inset:0;
+  z-index:1000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background: rgba(10,10,10,0.96);
+  padding: 24px;
+}
+.visor-fotos.abierto{ display:flex; }
+.visor-imagen{
+  max-width: min(92vw, 1100px);
+  max-height: 86vh;
+  width:auto; height:auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  pointer-events:none;
+  -webkit-user-select:none; user-select:none;
+  -webkit-touch-callout:none;
+}
+.visor-cerrar{
+  position:absolute; top:20px; right:24px;
+  font-size:34px; line-height:1;
+  background:none; border:none; color:var(--blanco);
+  cursor:pointer;
+  z-index:2;
+}
+.visor-flecha{
+  position:absolute; top:50%; transform:translateY(-50%);
+  background: rgba(255,255,255,0.06);
+  border:1px solid var(--gris-linea);
+  color:var(--blanco);
+  width:52px; height:52px;
+  border-radius:50%;
+  font-size:28px;
+  cursor:pointer;
+  transition: background .2s ease, border-color .2s ease;
+}
+.visor-flecha:hover{ background: rgba(217,164,65,0.15); border-color:var(--ambar); }
+.visor-anterior{ left:16px; }
+.visor-siguiente{ right:16px; }
+.visor-contador{
+  position:absolute; bottom:22px; left:50%; transform:translateX(-50%);
+  font-family:var(--fuente-display);
+  letter-spacing:1px;
+  font-size:13px;
+  color: var(--blanco-tenue);
+}
+@media (max-width:640px){
+  .visor-flecha{ width:42px; height:42px; font-size:22px; }
+  .visor-anterior{ left:6px; } .visor-siguiente{ right:6px; }
+}
 
 .galeria-estado{
   padding:60px 0;
