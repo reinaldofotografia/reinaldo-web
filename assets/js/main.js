@@ -6,7 +6,22 @@ document.addEventListener("DOMContentLoaded", () => {
   configurarEncabezadoAlDesplazar();
   cargarPortadaDinamica();
   cargarGaleriaDinamica();
+  protegerImagenes();
 });
+
+/* ---------- Protección básica contra descarga fácil ----------
+   No es infalible (una captura de pantalla siempre es posible),
+   pero evita el clic derecho > Guardar imagen, el arrastrar la
+   imagen fuera del navegador, y el guardado por toque largo en
+   móvil. */
+function protegerImagenes() {
+  document.addEventListener("contextmenu", (evento) => {
+    if (evento.target.tagName === "IMG") evento.preventDefault();
+  });
+  document.addEventListener("dragstart", (evento) => {
+    if (evento.target.tagName === "IMG") evento.preventDefault();
+  });
+}
 
 /* Resalta el enlace de la página actual en la navegación */
 function marcarEnlaceActivo() {
@@ -99,20 +114,85 @@ async function cargarGaleriaDinamica() {
     }
 
     const mostrar = archivos.slice(0, limite);
-    contenedor.innerHTML = mostrar
-      .map((nombre) => {
-        const url = `${urlBaseCDN()}/${SITIO_CONFIG.carpetaPortafolio}/${nombre}`;
-        return `
+    const urls = mostrar.map(
+      (nombre) => `${urlBaseCDN()}/${SITIO_CONFIG.carpetaPortafolio}/${nombre}`
+    );
+
+    contenedor.innerHTML = urls
+      .map(
+        (url, indice) => `
           <figure>
-            <a href="${url}" target="_blank" rel="noopener">
-              <img src="${url}" alt="Fotografía de Reinaldo Lugo" loading="lazy">
-            </a>
-          </figure>`;
-      })
+            <button type="button" class="galeria-boton" data-indice="${indice}" aria-label="Ver foto ${indice + 1} en grande">
+              <img src="${url}" alt="Fotografía de Reinaldo Lugo" loading="lazy" oncontextmenu="return false" ondragstart="return false">
+            </button>
+          </figure>`
+      )
       .join("");
+
+    inicializarLightbox(contenedor, urls);
   } catch (error) {
     contenedor.innerHTML =
       '<p class="galeria-estado">No se pudo cargar el portafolio en este momento. Intenta recargar la página.</p>';
     console.error(error);
   }
+}
+
+/* ---------- Visor de fotos (lightbox) con navegación ---------- */
+function inicializarLightbox(contenedor, urls) {
+  // Crea el marcado del visor una sola vez y lo agrega al final del body
+  let visor = document.querySelector(".visor-fotos");
+  if (!visor) {
+    visor = document.createElement("div");
+    visor.className = "visor-fotos";
+    visor.innerHTML = `
+      <button type="button" class="visor-cerrar" aria-label="Cerrar">&times;</button>
+      <button type="button" class="visor-flecha visor-anterior" aria-label="Foto anterior">&#8249;</button>
+      <img class="visor-imagen" src="" alt="Fotografía de Reinaldo Lugo" oncontextmenu="return false" ondragstart="return false">
+      <button type="button" class="visor-flecha visor-siguiente" aria-label="Foto siguiente">&#8250;</button>
+      <span class="visor-contador"></span>
+    `;
+    document.body.appendChild(visor);
+  }
+
+  const imagenVisor = visor.querySelector(".visor-imagen");
+  const contador = visor.querySelector(".visor-contador");
+  let actual = 0;
+
+  const mostrarFoto = (indice) => {
+    actual = (indice + urls.length) % urls.length;
+    imagenVisor.src = urls[actual];
+    contador.textContent = `${actual + 1} / ${urls.length}`;
+  };
+
+  const abrir = (indice) => {
+    mostrarFoto(indice);
+    visor.classList.add("abierto");
+    document.body.style.overflow = "hidden";
+  };
+
+  const cerrar = () => {
+    visor.classList.remove("abierto");
+    document.body.style.overflow = "";
+  };
+
+  contenedor.querySelectorAll(".galeria-boton").forEach((boton) => {
+    boton.addEventListener("click", () => abrir(Number(boton.dataset.indice)));
+  });
+
+  visor.querySelector(".visor-cerrar").addEventListener("click", cerrar);
+  visor.querySelector(".visor-anterior").addEventListener("click", () => mostrarFoto(actual - 1));
+  visor.querySelector(".visor-siguiente").addEventListener("click", () => mostrarFoto(actual + 1));
+
+  // Cierra al hacer clic fuera de la imagen
+  visor.addEventListener("click", (evento) => {
+    if (evento.target === visor) cerrar();
+  });
+
+  // Navegación con teclado
+  document.addEventListener("keydown", (evento) => {
+    if (!visor.classList.contains("abierto")) return;
+    if (evento.key === "Escape") cerrar();
+    if (evento.key === "ArrowLeft") mostrarFoto(actual - 1);
+    if (evento.key === "ArrowRight") mostrarFoto(actual + 1);
+  });
 }
